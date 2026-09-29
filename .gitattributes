@@ -1,0 +1,14 @@
+# Normalisasi baris akhir ke LF agar hasil yang dilayani GitHub Pages
+# konsisten di semua platform (tidak ada CRLF yang bocor ke HTML).
+* text=auto eol=lf
+
+# Tipe berkas yang wajib diperlakukan sebagai teks
+*.html text eol=lf
+*.css  text eol=lf
+*.js   text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+*.txt  text eol=lf
+.gitignore   text eol=lf
+.nojekyll    text eol=lf
