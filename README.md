@@ -13,8 +13,8 @@ tanpa dependensi npm. Tinggal buka di browser atau deploy langsung ke GitHub Pag
 | Berkas | Keterangan |
 | --- | --- |
 | `index.html` | Seluruh aplikasi (HTML + CSS + JS inline) |
-| `.github/workflows/pages.yml` | Workflow otomatis deploy ke GitHub Pages |
 | `.nojekyll` | Mematikan proses Jekyll agar struktur repo tidak diabaikan |
+| `.gitattributes` | Normalisasi baris akhir ke LF |
 | `.gitignore` | Berkas yang tidak perlu di-commit |
 
 ## Menjalankan secara lokal
@@ -37,25 +37,36 @@ Lalu buka `http://localhost:8000`.
 
 ## Deploy ke GitHub Pages
 
-### Cara A — otomatis via GitHub Actions (disarankan)
+> **Penting:** GitHub Pages gratis hanya tersedia untuk repository **public**, dan
+> berkas masuk harus bernama `index.html` serta berada di root repository. GitHub Pages
+> tidak otomatis menampilkan `simulasi_instalasi_sistem_operasi.html` sebagai halaman
+> utama dan tidak ada proses rename saat deploy — karena itu berkasnya sudah dinamai
+> `index.html`.
 
-1. Upload repository ini ke GitHub (branch `main`).
-2. Buka **Settings → Pages**.
-3. Pada **Build and deployment → Source**, pilih **GitHub Actions**.
-4. Workflow `.github/workflows/pages.yml` akan berjalan otomatis setiap `push` ke `main`.
-   Alamat situsnya: `https://<user>.github.io/<nama-repo>/`
+### Deploy from a branch (dipakai repo ini)
 
-### Cara B — deploy langsung dari branch
-
-1. Buka **Settings → Pages**.
-2. Pada **Source**, pilih **Deploy from a branch**.
+1. Buka **Settings → Pages** pada repository.
+2. Pada **Build and deployment → Source**, pilih **Deploy from a branch**.
 3. Branch: `main`, folder: `/ (root)`.
-4. Klik **Save**. GitHub akan mempublish `index.html` di root repo.
+4. Klik **Save**. GitHub mempublish `index.html` di root repo.
 
-> **Penting:** berkas masuk harus bernama `index.html` dan berada di root repository.
-> GitHub Pages tidak otomatis menampilkan `simulasi_instalasi_sistem_operasi.html`
-> sebagai halaman utama, dan tidak ada proses rename saat deploy — karena itu berkas
-> sudah dinamai `index.html`.
+Alamat situsnya: `https://hendrazulpiadi.github.io/os-simulasi/`
+
+Setiap `push` ke `main` otomatis memperbarui situs (dengan jeda ±1 menit).
+Tidak ada proses build, sehingga tidak ada tooling yang perlu disiapkan.
+
+### Opsional: auto-deploy via GitHub Actions
+
+Alternatif bila nanti ingin proses deploy tercatat di tab **Actions** (dengan badge
+status). Tambahkan `.github/workflows/pages.yml`, lalu ubah **Settings → Pages →
+Source** menjadi **GitHub Actions**.
+
+Perlu diperhatikan: workflow hanya bisa di-push dengan token yang punya scope
+`workflow`, jadi pakai GitHub CLI perlu di-autentikasi ulang lebih dulu:
+
+```bash
+gh auth refresh -h github.com -s workflow
+```
 
 ## Alur simulasi
 
